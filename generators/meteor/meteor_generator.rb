@@ -22,9 +22,7 @@ class MeteorGenerator < Rails::Generator::Base
       
   def manifest
     record do |m|
-
       recursive_copy(m,File.expand_path("../templates", __FILE__))
-      
     end
   end
 end
