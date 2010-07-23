@@ -1,0 +1,13 @@
+<% 
+   raise "set row in #{current_method}" unless row
+   raise "set addform_table in #{current_method}" unless addform_table
+   
+   contents = "#{htmlprefix}_#{row.id}_contents" 
+   args.merge!(:contents => contents) 
+%>
+
+<tr id="<%= contents %>"
+    class="meteor_datarow">
+  <!-- just render tr header row for #{contents} -->
+  <%= renderer.conditionally_render_partial(:row_interior,args) %>
+</tr>

@@ -1,0 +1,17 @@
+<%
+
+   rows = renderer.data_for_render
+
+   tbody = "#{htmlprefix}_tbody"
+   error_div = "#{htmlprefix}_errors"
+   addform_table = "#{htmlprefix}_addform"
+   table_id = "#{htmlprefix}_table"
+   args.merge!(:tbody => tbody,
+               :error_div => error_div,
+               :rows => rows,
+	       :table_id => table_id,
+               :addform_table => addform_table)
+
+%>
+
+<%= renderer.conditionally_render_partial(spec.has_children? ? :rows_with_children : :rows_without_children, args) %>

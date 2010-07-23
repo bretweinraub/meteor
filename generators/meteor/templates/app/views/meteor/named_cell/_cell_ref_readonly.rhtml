@@ -1,0 +1,18 @@
+
+  <td class="<%= name %>_named_cell_label">
+    <%= cell.title %>:
+  </td>
+  <td class="<%= name %>_named_cell_data">
+    <% 
+       _obj = object.send(cell.name)
+       text = "N/A"
+       [:to_label,
+       :name,
+       :to_s].each do |meth|
+         if _obj.respond_to?(meth)
+           break if text = _obj.send(meth)
+         end 
+       end%>
+    <%= text %>
+  </td>
+

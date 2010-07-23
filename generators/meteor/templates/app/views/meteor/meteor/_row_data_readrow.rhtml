@@ -1,0 +1,10 @@
+
+<%= renderer.conditionally_render_partial(:actions,args.merge({:rowtype => :read})) %>
+<% spec.non_ignored_columns.each do |col| %>
+<td id="<%= readrow %>_<%= col.name %>"
+    onclick="Element.hide('<%= readrow %>');Element.show('<%= writerow %>');$('<%= writerow %>_<%= col.name %>').focus()">
+  <%= renderer.conditionally_render_partial("#{col.type}_column".to_sym,args.merge(:type=>:read,
+                                                                                   :html_id => readrow, 
+                                                                                   :column=>col)) %>
+</td>
+<% end %>

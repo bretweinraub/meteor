@@ -1,0 +1,36 @@
+  <td class="<%= name %>_named_cell_label">
+    <span title="<%= cell.edit ? "click the data to edit the #{cell.title}" : cell.title %>">
+      <%= cell.title %>:
+    </span>
+  </td>
+
+  <td>
+    <% cell_id = "#{cell.name}_#{id}_in_place_editor" 
+       url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/named_cell_inplace_edit/#{id}?spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}" %>
+
+
+
+new Ajax.InPlaceEditor('<%= cell_id %>', '<%= url ^>',{rows:4,cols:100})
+//]]>
+    </script> 
+  </td>
+
+
+
+    <span class="in_place_editor_field" id="<%= cell_id %>" style="background-color: #FFFFCC;"><%= ((_tmp = object.send(cell.name)) ? _tmp : '-') %></span>
+    <script type="text/javascript"> 
+//<![CDATA[
+
+
+
+<script type="text/javascript">
+Calendar.setup({
+ inputField : "<%= cell_id -%>", // id of the input field
+ ifFormat : "%Y-%m-%d", // format of the input field
+ button : "<%= cal_id -%>", // trigger for the calendar (button ID)
+ align : "Tl", // alignment (defaults to "Bl")
+ singleClick : true
+ });
+</script>
+
+

@@ -1,0 +1,13 @@
+  <td class="<%= name %>_named_cell_label">
+    <span title="<%= cell.edit ? "click the data to edit the #{cell.title}" : cell.title %>">
+      <%= cell.title %>:
+    </span>
+  </td>
+  <td class="<%= name %>_named_cell_data" <%= (cell.colspan ? "colspan=\"#{cell.colspan}\"" : "") -%>>
+    <% cell_id = "#{cell.name}_#{id}_in_place_editor" 
+       url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/named_cell_inplace_edit/#{id}?spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}" %>
+    <pre><span class="in_place_editor_field" id="<%= cell_id %>"><%= ((_tmp = object.send(cell.name)) ? (_tmp.length > 0 ? _tmp : '-') : '-') %></span></pre>
+    <% ret = "<script type=\"text/javascript\">\n//<![CDATA[\nnew Ajax.InPlaceEditor('#{cell_id}', '#{url}',{rows:8,cols:80})\n//]]>\n</script>" %>
+    <%= ret %>
+  </td>
+

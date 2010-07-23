@@ -1,0 +1,8 @@
+<a href="javascript:{}" 
+<% if rowtype == :add -%>
+   onclick="Element.hide('<%= visible_div_id %>');">
+<% else -%>
+   onclick="Element.hide('<%= writerow %>');Element.show('<%= readrow %>');">
+<% end %>
+Cancel
+</a>

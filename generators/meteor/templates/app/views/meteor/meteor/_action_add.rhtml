@@ -1,0 +1,33 @@
+<%
+   action = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/meteor/#{id}?actionname=#{actionname}&name=#{name}&parent_klass=#{spec.parent_klass}&klass=#{spec.klass}&visible_div_id=#{visible_div_id}&indicator=#{indicator}&form_id=#{form_id}&tbody=#{tbody}&error_div=#{error_div}&path=#{spec.path}&htmlprefix=#{htmlprefix}&addform_table=#{addform_table}&widget_class=Meteor&contents=#{contents}"
+
+   if spec.ok_to_upload? 
+      action += "&respond_to_parent=1"
+   end
+%>
+
+<% if spec.ok_to_upload? %>
+
+<a href="#"
+   id="<%= visible_div_id %>_<%= actionname %>"
+   onclick="<%= Meteor::Util.js_code_block(["Element.show('#{indicator}')",
+					"var f = document.getElementById('#{form_id}')",
+					"f.action = '#{action}'",
+					"f.submit()",
+					"return false"]) %>">
+
+  <%= actionname.to_s.capitalize %>
+</a>
+
+<% else %>
+
+<a href="#"
+   id="<%= visible_div_id %>_<%= actionname %>"
+   onclick="<%= Meteor::Util.js_code_block(["Element.show('#{indicator}')",
+                                    "new Ajax.Request('#{action}', {asynchronous:true, evalScripts:true, onSuccess:function(request){Element.hide('#{indicator}');Form.enable('#{form_id}');}, parameters:Form.serialize('#{form_id}')})",
+                                    "Form.disable('#{form_id}')",
+                                    "return false"]) %>">
+
+  <%= actionname.to_s.capitalize %>
+</a>
+<% end %>

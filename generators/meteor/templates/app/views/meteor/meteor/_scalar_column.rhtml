@@ -1,0 +1,19 @@
+<%   column_name = "#{args[:html_id] || args[:htmlprefix]}_#{column.name}" %>
+
+
+<% extras = ''
+   column.html_attributes.keys.each {|attr| extras += "#{attr}=\"#{column.html_attributes[attr]}\""} 
+%>
+
+
+<% if type == :add %>
+<input id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" type="text" value="" <%= extras %>/>
+<% elsif type == :edit %>
+
+<input id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" type="text" value="<%= row.send(column.name.to_sym).to_s %>" <%= extras %>/>
+<script type="text/javascript"> 
+$('<%= column_name %>').observe('keydown', respondToReturn('<%= writerow %>_submit'));
+</script>
+<% else %>
+<span title="click to edit"><%= row.send(column.name.to_sym).to_s %></span>
+<% end %>

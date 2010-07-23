@@ -1,0 +1,11 @@
+<% column_name = "#{args[:html_id] || args[:htmlprefix]}_#{column.name}" %>
+<% if type == :add %>
+<input id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" size="10%" type="file" value=""/>
+<% elsif type == :edit %>
+<input id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" size="5%" type="text" value="<%= row.send(column.name.to_sym).to_s %>" />
+<script type="text/javascript"> 
+$('<%= column_name %>').observe('keydown', respondToReturn('<%= writerow %>_submit'));
+</script>
+<% else %>
+<span title="click to download"><%= row.send(column.name.to_sym).to_s %></span>
+<% end %>

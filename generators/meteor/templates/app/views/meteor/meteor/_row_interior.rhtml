@@ -1,0 +1,58 @@
+<%
+   editstate = args[:editstate] # if set ; we are generating HTML to replace the current "tr"
+   # tag; typically this means we will currently have 
+   # been in editing state; so we will keep that state.
+
+   #      rownum = args[:rownum]
+   raise "set :row in #{current_method}" unless row
+
+   editwidget = "#{htmlprefix}_#{row.id}"
+   args.merge!(:editwidget => editwidget)
+
+   @expanded = (expanded rescue false) || (params.has_key?("expanded") rescue false)
+
+   def self.expand?(h={})
+     default = h[:default]
+     if (@expanded rescue false)
+       default ? "display: none;" : ""
+     else
+       default ? "" : "display: none;"
+     end
+   end
+
+%>
+<td align="left" 
+    valign="center"> 
+  <div style="<%= expand?(:default => false) %>" 
+       id="<%= editwidget %>_hide">
+    <img src="/images/collapse.jpg" 
+	 onclick="Effect.SlideUp('<%= editwidget %>_editwidget');Element.show('<%= editwidget %>_show');Element.hide('<%= editwidget %>_hide');Element.show('<%= editwidget %>_editwidget_min');">
+  </div> 
+  <div id="<%= editwidget %>_show" 
+       style="<%= expand?(:default => true) %>margin:0;padding:0;">
+    <img style="margin:0;padding:0;" 
+	 src="/images/expand.jpg" 
+	 onclick="Effect.SlideDown('<%= editwidget %>_editwidget');Element.hide('<%= editwidget %>_show');Element.show('<%= editwidget %>_hide');Element.hide('<%= editwidget %>_editwidget_min');">
+  </div> 
+</td> 
+<td>
+  <div id="<%= editwidget %>_editwidget"
+       style="<%= expand?(:default => false) %>">
+    <span onclick="Effect.SlideUp('<%= editwidget %>_editwidget');Element.show('<%= editwidget %>_show');Element.hide('<%= editwidget %>_hide');Element.show('<%= editwidget %>_editwidget_min');" title="click to collapse">
+      <i><b><%= row.name %></b></i>
+    </span>
+    <table width="100%"
+	   class="meteor_borderbox"
+	   id="<%= htmlprefix %>_row_<%= row.id %>">
+      <%= renderer.conditionally_render_partial(:header,args) %>
+      <%= renderer.conditionally_render_partial(:row_data,args) %>
+    </table>
+  </div>
+  <div id="<%= editwidget %>_editwidget_min"
+       style="<%= expand?(:default => true) %>"
+       onclick="Effect.SlideDown('<%= editwidget %>_editwidget');Element.hide('<%= editwidget %>_show');Element.show('<%= editwidget %>_hide');Element.hide('<%= editwidget %>_editwidget_min');">
+    <span title="click to expand">
+      <b><%= row.name %></b>
+    </span>
+  </div>
+</td>

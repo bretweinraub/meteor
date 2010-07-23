@@ -1,0 +1,29 @@
+<%
+  case rowtype
+  when :read
+    actions = []
+    actions.push(:edit) if spec.ok_to_edit?
+    actions.push(:delete) if spec.ok_to_delete?
+    indicator = "#{rowname}_read_indicator"
+  when :edit 
+    actions = [:submit,:cancel]
+    indicator = "#{rowname}_write_indicator"
+  when :add
+    actions = [:add,:cancel]
+    indicator = "#{visible_div_id}_indicator"
+  end
+
+  args.merge!(:indicator => indicator)
+%>
+<td>
+  <img id="<%= indicator %>" 
+       style="display: none;"
+       src="/images/indicator.gif"/>
+<% i = 0 
+   actions.each do |action| %>
+  <%= renderer.conditionally_render_partial(["action_#{action}",
+                                             :action],
+                                            args.merge({:actionname => action,
+                                                        :form_id => form_id ? form_id : (rowtype == :read ? readrow : writerow)})) -%>&nbsp;
+<% end %>
+</td>

@@ -1,0 +1,16 @@
+
+  <tr>
+    <td>
+      <table width="100%">
+        <% rownumber = 0 
+             spec.rows.each do |row| %>
+        <tr>
+	  <%= renderer.conditionally_render_partial(:row, args.merge!(:row => row,
+                                                                      :rownumber => rownumber)) %>
+        </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+
+

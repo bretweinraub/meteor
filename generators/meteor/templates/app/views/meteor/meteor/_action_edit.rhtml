@@ -1,0 +1,6 @@
+<% focuselement = args[:focuselement] ? "$('#{h[:focuselement]}').focus();" : "" %>
+
+<a href="javascript:{}" 
+   onclick="Element.hide('<%= readrow %>');Element.show('<%= writerow %>');<%= focuselement %>">
+Edit
+</a>

@@ -1,0 +1,19 @@
+<%
+   rows = spec.klass.send(:find_by_sql,sql)
+   rownum = -1
+   rows.each do |row|
+     rownum += 1 
+     editwidget = "#{htmlprefix}_#{row.id}"
+-%>
+try {Element.hide('<%= editwidget %>_hide');} catch (e) {}
+try {Element.show('<%= editwidget %>_show');} catch (e) {}
+try {Element.hide('<%= editwidget %>_editwidget');} catch (e) {}
+try {Element.show('<%= editwidget %>_editwidget_min');} catch (e) {}
+
+<% spec.children.each do |child| %>
+    <%= renderer.render_child({:child => child, :row => row, :event => renderer.event}) %>
+<% end %>
+
+<% end -%>
+
+

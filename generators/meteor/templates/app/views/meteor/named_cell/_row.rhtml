@@ -1,0 +1,11 @@
+<% if row.separator_row -%>
+  <tr height="1px">
+    <td height="1px" colspan="<%= spec.max_columns * 2 %>">
+      <hr/>
+    </td>
+  </tr>
+<% else
+     row.cell_list.each do |cell| -%>
+       <%= renderer.conditionally_render_partial("cell_#{cell.type}_#{cell.edit ? 'editable' : 'readonly'}",args.merge!(:cell=>cell)) -%>
+  <% end
+   end -%>

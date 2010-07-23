@@ -1,0 +1,92 @@
+<% 
+
+   contents = "#{htmlprefix}_contents"
+   args.merge!(:contents => contents)
+
+%>
+
+
+<table id="<%= htmlprefix %>" 
+       width="100%" 
+       class="<%= frontend %>_borderbox"> 
+
+<% unless (no_double_border rescue false) %>
+  <tr>
+    <td>
+      <table width="100%" 
+	     class="<%= frontend %>_borderbox"> 
+<% end %>
+
+
+  <tr id="<%= htmlprefix %>_titlebar"> 
+    <td class="<%= frontend %>_panebox"> 
+      <table> 
+	<tr> 
+	  <td class="<%= frontend %>_enclosure_box" 
+	      width="100%"> 
+    	    <table width="100%" 
+		   style="margin:0; padding:0;"> 
+	      <tr> 
+		<td align="left" 
+		    valign="center"> 
+		  <div id="<%= htmlprefix %>_hide">
+		    <img src="/images/collapse.jpg" 
+			 onclick="Element.hide('<%= htmlprefix %>_contents');Element.show('<%= htmlprefix %>_show');Element.hide('<%= htmlprefix %>_hide');" 
+			 style="margin:0;padding:0;">
+		  </div> 
+		  <div id="<%= htmlprefix %>_show" 
+		       style="display:none;">
+		    <img style="margin:0;padding:0;" 
+			 src="/images/expand.jpg"  
+			 onclick="Element.show('<%= htmlprefix %>_contents');Element.hide('<%= htmlprefix %>_show');Element.show('<%= htmlprefix %>_hide');">
+		  </div> 
+		</td> 
+		<td align="left"> 
+                  <%= spec.title %>:
+		</td>
+		<%
+		   if spec.respond_to?(:ok_to_add?) and spec.ok_to_add?
+		   %>
+                <td>
+                  <img src="/images/plus.jpeg"
+		       onclick="Effect.SlideDown('<%= htmlprefix %>_addform');">
+                </td>
+                <td>
+                  <img src="/images/minus.jpeg" 
+		       onclick="Element.hide('<%= htmlprefix %>_addform');">
+                </td> 
+		<%
+		   end
+		   %>
+ 		<img id="<%= htmlprefix %>_indicator" 
+		     src="/images/indicator.gif" 
+		     style="display:none;">
+	      </tr> 
+	    </table> 
+	  </td> 
+	</tr> 
+      </table> 
+    </td> 
+  </tr> 
+  <tr>
+    <td class="<%= frontend %>_error" 
+	id="<%= htmlprefix %>_errors" 
+	style="display:none;"> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table id="<%= contents %>" width="100%">
+	<!-- about to call block from _hideable_panebox -->
+  <%= block.call %>
+      </table>
+    </td>
+  </tr>
+
+  <% # = renderer.conditionally_render_partial(:rows,args) %>
+<% unless (no_double_border rescue false) %>
+      </table>
+    </td>
+  </tr>
+<% end %>
+</table>

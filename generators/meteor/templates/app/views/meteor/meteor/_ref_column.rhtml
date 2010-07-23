@@ -1,0 +1,28 @@
+<% 
+   column_name = "#{args[:html_id] || args[:htmlprefix]}_#{column.name}"
+   if type == :edit
+      current_value = row.send(column.name.to_sym)
+   end
+%>
+
+<!-- adding ref column for #{column.name} of type #{type} -->
+
+<% if type == :add or type == :edit %>
+<select id="<%= column_name %>"
+        name="<%= name %>[<%= column.name %>]">
+  <%= (type == :add) ? "\n<option value=""></option>\n" : "" %>
+  <% finder_sql = column.finder_sql(args.merge(:renderer => renderer)) 
+     renderer.caching_finder(:klass => column.refclass,
+		             :sql => finder_sql).each do |row| 
+       selected = (type == :edit and current_value == row.id) ? ' selected="1"' : "" %>
+  <option value="<%= row.id %>"<%= selected %>><%= row.name %></option>
+  <% end 
+     if type == :edit %>
+     <script type="text/javascript">
+       $('<%= column_name %>').observe('keydown', respondToReturn('<%= writerow %>_submit'));
+     </script>
+<%   end 
+   else  %>
+     <%= (refrow = column.refclass.send(:find,row.send(column.name.to_sym)) rescue nil) ? refrow.name : '?' %>
+<% end %>
+

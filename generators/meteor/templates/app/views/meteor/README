@@ -1,0 +1,12 @@
+
+Subdirectories in this directory represents "frontends" to the meteor plugin.
+
+So:
+
+Meteor::Renderer.new(:frontend => "meteor")
+
+or
+
+
+Meteor::Renderer.new(:frontend => "some other subdirectory") # not absolute path; just the last bit
+

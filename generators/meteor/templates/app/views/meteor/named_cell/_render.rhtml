@@ -1,0 +1,7 @@
+<% @object = object %>
+
+<%= renderer.conditionally_render_partial(:hideable_panebox, args) do
+      renderer.conditionally_render_partial(:rows,args)
+    end  %>
+
+      

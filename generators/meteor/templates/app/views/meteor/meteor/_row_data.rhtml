@@ -1,0 +1,18 @@
+<%
+   rowname = "#{htmlprefix}_#{row.id}"
+   readrow = "#{rowname}_read"
+   writerow= "#{rowname}_write"
+
+   args.merge!(:rowname => rowname,
+               :readrow => readrow,
+               :writerow => writerow)			  
+%>
+
+<tr id="<%= readrow %>">
+  <%= renderer.conditionally_render_partial(:row_data_readrow,args) %>
+</tr>
+<tr id="<%= writerow %>"
+    style="display:none;">
+  <%= renderer.conditionally_render_partial(:row_data_writerow,args) %>
+<tr>
+<%= renderer.conditionally_render_partial(:meteor_children,args) %>

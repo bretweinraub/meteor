@@ -1,0 +1,8 @@
+<%   column_name = "#{args[:html_id] || args[:htmlprefix]}_#{column.name}" %>
+<% if type == :add %>
+  <textarea id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" rows="<%= column.textbox_rows %>" cols="<%= column.textbox_columns %>"></textarea>
+<% elsif type == :edit %>
+  <textarea id="<%= column_name %>" name="<%= name %>[<%= column.name %>]" rows="<%= column.textbox_rows %>" cols="<%= column.textbox_columns %>"><%= row.send(column.name.to_sym).to_s %></textarea>
+<% else %>
+  <span title="click to edit"><%= row.send(column.name.to_sym).to_s %></span>
+<% end %>

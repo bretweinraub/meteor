@@ -1,0 +1,20 @@
+<%   column_name = "#{args[:html_id] || args[:htmlprefix]}_#{column.name}" %>
+<% if type == :add %>
+<select id="<%= column_name %>" name="<%= name %>[<%= column.name %>]">
+<% column.select.each do |option| %>
+  <option value="<%= option %>"><%= option %></option>
+<% end %>
+</select>
+<% elsif type == :edit 
+   current = row.send(column.name.to_sym).to_s %>
+<select id="<%= column_name %>" name="<%= name %>[<%= column.name %>]">
+<% column.select.each do |option| %>
+  <option value="<%= option %>" <%= option_equal(current,option) ? 'selected="1"' : '' %>><%= option %></option>
+<% end %>
+</select>
+<script type="text/javascript"> 
+$('<%= column_name %>').observe('keydown', respondToReturn('<%= writerow %>_submit'));
+</script>
+<% else %>
+<span title="click to edit"><%= row.send(column.name.to_sym).to_s %></span>
+<% end %>

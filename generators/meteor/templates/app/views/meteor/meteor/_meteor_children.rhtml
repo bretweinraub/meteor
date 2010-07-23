@@ -1,0 +1,7 @@
+<% spec.children.each do |child| %>
+<tr id="meteor_<%= name %>_<%= row.id %>_<%= child.name %>s">
+  <td colspan="<%= spec.non_ignored_columns.length+1 %>">
+    <%= renderer.render_child({:child => child, :row => row}, {:no_double_border => true}) %>
+  </td>
+</tr>
+<% end %>

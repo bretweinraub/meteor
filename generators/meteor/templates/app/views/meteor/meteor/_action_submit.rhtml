@@ -1,0 +1,19 @@
+<%
+   # see _actions.html
+   # this is the fallback action if _action_#{actionname} is not defined.
+
+   visible_div_id = '' unless visible_div_id
+
+   action = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/meteor?actionname=#{actionname}&name=#{name}&parent_klass=#{spec.parent_klass}&klass=#{spec.klass}&visible_div_id=#{visible_div_id}&indicator=#{indicator}&form_id=#{writerow}&tbody=#{tbody}&error_div=#{error_div}&path=#{spec.path}&htmlprefix=#{htmlprefix}&readrow=#{readrow}&writerow=#{writerow}&id=#{row ? row.id : nil}&contents=#{contents}&rowname=#{rowname}&addform_table=#{addform_table}&widget_class=Meteor"
+%>
+
+<a href="#"
+   id="<%= writerow %>_<%= actionname %>"
+   onclick="<%= Meteor::Util.js_code_block(["Element.show('#{indicator}')",
+                                    "new Ajax.Request('#{action}', {asynchronous:true, evalScripts:true, onSuccess:function(request){Element.hide('#{indicator}');Form.enable('#{writerow}');}, parameters:Form.serialize('#{writerow}')})",
+                                    "Form.disable('#{writerow}')",
+                                    "return false"]) %>">
+
+  <%= actionname.to_s.capitalize %>
+</a>
+

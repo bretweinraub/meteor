@@ -1,0 +1,24 @@
+      <% if spec.ok_to_add? %>
+      <thead "id"="<%= htmlprefix %>_thead">
+	<tr>
+	  <td></td>
+	  <td>
+	    <%= renderer.conditionally_render_partial(:addform,args.merge(:visible_div_id => addform_table)) %>
+          </td>
+        </tr>										 
+	<tr>
+	  <td></td>
+	  <td colspan="<%= spec.non_ignored_columns.length+1 %>">
+	    <div id="<%= error_div %>" style="display: none;">
+	    </div>
+          </td>
+        </tr>										 
+      <% end %>
+      <tbody id="<%= tbody %>">
+	<% rownum = -1
+	   rows.each do |row|
+	     rownum += 1 %>
+  	  <%= renderer.conditionally_render_partial(:row,args.merge({:row => row, 
+                                                                     :rownum => rownum})) %>
+        <% end %>
+      </tbody>

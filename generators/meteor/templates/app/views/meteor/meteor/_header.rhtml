@@ -1,0 +1,16 @@
+<tr id="<%= htmlprefix %>_header">
+  <th class="meteor_table_actions_call">
+    Actions
+  </th>
+  <% 
+    spec.non_ignored_columns.each do |col| 
+      if args[:add] 
+  %>
+     <%= col.render_column_header(renderer,args) if col.create %>
+  <% else %>
+     <%= col.render_column_header(renderer,args) %>
+  <% 
+      end 
+    end 
+  %>
+</tr>
