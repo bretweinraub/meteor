@@ -140,7 +140,7 @@ module Meteor
         if self.respond_to?("render_#{partial_spec}".to_sym)
           ret = send("render_#{partial_spec}",*args,&block) 
         else
-          raise "nothing found to render for #{partial_spec}"
+          raise "nothing found to render for #{partial_spec}."
           ckebug 0, "nothing found to render for #{partial_spec}"
           ret = "no such partial #{partial_spec}" # hmmm....
         end
@@ -174,8 +174,25 @@ module Meteor
 
         # allows an array of partials to be checked for existence; return the first one found.
         def @template.partial_check_order(*args)
-          args.each do |file_to_check|
-            return file_to_check if file_exists?(file_to_check)
+          #
+          # ActionView#Base can have multiple view paths (I didn't know that when I first wrote this).
+          # Ultimately I think Meteor should have used this feature instead of pushing its views into 
+          # $RAILS_ROOT/app/views/meteor.
+          #
+          # TODO: break this dependency; allow for rails widget snippets to go anywhere.
+          #
+
+          view_paths.each do |view_path|
+            args.each do |file_to_check|
+              return file_to_check if (
+                                       File.exists?("#{view_path}/#{file_to_check}.erb") or
+                                       File.exists?("#{view_path}/#{file_to_check}.rhtml") 
+                                       )
+                                       
+
+              
+
+            end
           end
           nil
         end
