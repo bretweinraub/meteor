@@ -25,13 +25,13 @@
     valign="center"> 
   <div style="<%= expand?(:default => false) %>" 
        id="<%= editwidget %>_hide">
-    <img src="/meteor/images/collapse.jpg" 
+    <img src="/images/meteor/collapse.jpg" 
 	 onclick="Effect.SlideUp('<%= editwidget %>_editwidget');Element.show('<%= editwidget %>_show');Element.hide('<%= editwidget %>_hide');Element.show('<%= editwidget %>_editwidget_min');">
   </div> 
   <div id="<%= editwidget %>_show" 
        style="<%= expand?(:default => true) %>margin:0;padding:0;">
     <img style="margin:0;padding:0;" 
-	 src="/meteor/images/expand.jpg" 
+	 src="/images/meteor/expand.jpg" 
 	 onclick="Effect.SlideDown('<%= editwidget %>_editwidget');Element.hide('<%= editwidget %>_show');Element.show('<%= editwidget %>_hide');Element.hide('<%= editwidget %>_editwidget_min');">
   </div> 
 </td> 
