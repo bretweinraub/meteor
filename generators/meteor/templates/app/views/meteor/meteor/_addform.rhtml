@@ -3,15 +3,15 @@
    #   meteor_renderer
    #
 
-   # {:tbody=>"meteor_contract_product_6088_tbody", :error_div=>"meteor_contract_product_6088_errors"} 
-
   form_id = "#{addform_table}_form"
   upload_iframe_id = "#{addform_table}_upload_iframe"
   args.merge!(:form_id => form_id)								
 
 -%>
+
 <% unless (skip_form_enclosure rescue false) -%>
 
+<!-- ok_to_upload? = <%= spec.ok_to_upload? %> -->
 <% if spec.ok_to_upload? -%>
 <form id="<%= form_id -%>" target="<%= upload_iframe_id -%>" enctype="multipart/form-data" method="post">
 <% else -%>

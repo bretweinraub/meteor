@@ -24,6 +24,6 @@
   <%= renderer.conditionally_render_partial(["action_#{action}",
                                              :action],
                                             args.merge({:actionname => action,
-                                                        :form_id => form_id ? form_id : (rowtype == :read ? readrow : writerow)})) -%>&nbsp;
+                                                        :form_id => (form_id rescue nil) ? form_id : (rowtype == :read ? readrow : writerow)})) -%>&nbsp;
 <% end %>
 </td>

@@ -1,3 +1,23 @@
+<%
+
+#
+# Hideable panebox - creates a wrapper around content to be "minimizeable" via a prototype control.
+#
+# TBD: 
+#
+# - Images are installed in the app via "script/generate meteor".   The image path is "/images/meteor"; although
+# any widget can use this hideable panebox.
+#
+# - References to the HTML addform are hardcoded #{htmlprefix}_addform ; this shoud be passed in via a local.
+#
+# Usage:
+#
+# renderer.conditionally_render_partial(:hideable_panebox, args) {renderer.conditionally_render_partial(:some_other_partial,args)} %>
+#
+#
+ 
+%>
+
 <% 
 
    contents = "#{htmlprefix}_contents"
