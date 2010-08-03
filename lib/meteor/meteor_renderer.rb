@@ -21,9 +21,17 @@ module Meteor
     #
 
     def sql_query
-      is_deleted_clause = spec.klass.columns.select {|col| col.name == "is_deleted"}.length > 0 ? " and is_deleted <> 'Y'" : ""
 
-      "select * from #{spec.klass.table_name} where #{spec.parent_klass.primary_key} = #{id} #{is_deleted_clause}" 
+      if spec.klass.columns.select {|col| col.name == "id"}.length > 0 
+        # active record
+        "select * from #{spec.klass.table_name} where #{spec.parent_klass.table_name.singularize}_id = #{id}" 
+      else
+        # m80
+        is_deleted_clause = spec.klass.columns.select {|col| col.name == "is_deleted"}.length > 0 ? " and is_deleted <> 'Y'" : ""
+
+        "select * from #{spec.klass.table_name} where #{spec.parent_klass.primary_key} = #{id} #{is_deleted_clause}" 
+      end
+
     end
 
     ################################################################################
