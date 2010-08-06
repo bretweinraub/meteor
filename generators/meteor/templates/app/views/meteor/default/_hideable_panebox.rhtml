@@ -1,3 +1,23 @@
+<%
+
+#
+# Hideable panebox - creates a wrapper around content to be "minimizeable" via a prototype control.
+#
+# TBD: 
+#
+# - Images are installed in the app via "script/generate meteor".   The image path is "/images/meteor"; although
+# any widget can use this hideable panebox.
+#
+# - References to the HTML addform are hardcoded #{htmlprefix}_addform ; this shoud be passed in via a local.
+#
+# Usage:
+#
+# renderer.conditionally_render_partial(:hideable_panebox, args) {renderer.conditionally_render_partial(:some_other_partial,args)} %>
+#
+#
+ 
+%>
+
 <% 
 
    contents = "#{htmlprefix}_contents"
@@ -30,14 +50,14 @@
 		<td align="left" 
 		    valign="center"> 
 		  <div id="<%= htmlprefix %>_hide">
-		    <img src="/meteor/images/collapse.jpg" 
+		    <img src="/images/meteor/collapse.jpg" 
 			 onclick="Element.hide('<%= htmlprefix %>_contents');Element.show('<%= htmlprefix %>_show');Element.hide('<%= htmlprefix %>_hide');" 
 			 style="margin:0;padding:0;">
 		  </div> 
 		  <div id="<%= htmlprefix %>_show" 
 		       style="display:none;">
 		    <img style="margin:0;padding:0;" 
-			 src="/meteor/images/expand.jpg"  
+			 src="/images/meteor/expand.jpg"  
 			 onclick="Element.show('<%= htmlprefix %>_contents');Element.hide('<%= htmlprefix %>_show');Element.show('<%= htmlprefix %>_hide');">
 		  </div> 
 		</td> 
@@ -48,18 +68,18 @@
 		   if spec.respond_to?(:ok_to_add?) and spec.ok_to_add?
 		   %>
                 <td>
-                  <img src="/meteor/images/plus.jpeg"
+                  <img src="/images/meteor/plus.jpeg"
 		       onclick="Effect.SlideDown('<%= htmlprefix %>_addform');">
                 </td>
                 <td>
-                  <img src="/meteor/images/minus.jpeg" 
+                  <img src="/images/meteor/minus.jpeg" 
 		       onclick="Element.hide('<%= htmlprefix %>_addform');">
                 </td> 
 		<%
 		   end
 		   %>
  		<img id="<%= htmlprefix %>_indicator" 
-		     src="/meteor/images/indicator.gif" 
+		     src="/images/meteor/indicator.gif" 
 		     style="display:none;">
 	      </tr> 
 	    </table> 
