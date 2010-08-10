@@ -53,23 +53,18 @@ Object.extend(Object.extend(Ajax.InPlaceDateEditor.prototype,
     this._form.appendChild(img);
   },
 
-  enterEditMode: function(evt) {
-    if (this.saving) return;
-    if (this.editing) return;
-    this.editing = true;
+  enterEditMode: function(e) {
+    if (this._saving || this._editing) return;
+    this._editing = true;
     this.triggerCallback('onEnterEditMode');
-    if (this.options.externalControl) {
-      Element.hide(this.options.externalControl);
-    }
-    Element.hide(this.element);
+    if (this.options.externalControl)
+      this.options.externalControl.hide();
+    this.element.hide();
     this.createForm();
     this.element.parentNode.insertBefore(this._form, this.element);
-    if (!this.options.loadTextURL) Field.scrollFreeActivate(this.editField);
-    // stop the event to avoid a page refresh in Safari
-    if (evt) {
-      Event.stop(evt);
-    }
+    if (!this.options.loadTextURL)
+      this.postProcessEditField();
     Calendar.setup({inputField : this.options.paramName + '_input_id', ifFormat : "%Y-%m-%d", button : this.options.paramName + '_date_picker_img', align : "Tl", singleClick : true});
-    return false;
+    if (e) Event.stop(e);
   }
 });
