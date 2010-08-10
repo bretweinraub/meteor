@@ -7,12 +7,14 @@ module MeteorHelper
     if not s.kind_of? String
       s = s.to_s
     end
-
     if s.blank?
       s = substitute
     end
-
     s
+  end
+
+  def meteor_includes
+    render :partial => 'meteor/includes'
   end
 end
 
