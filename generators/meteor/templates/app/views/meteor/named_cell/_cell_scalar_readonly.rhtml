@@ -2,5 +2,5 @@
     <%= cell.title %>:
   </td>
   <td class="<%= name %>_named_cell_data">
-    <%=h object.send(cell.name) %>
+    <%=h replace_blank(object.send(cell.name)) %>
   </td>

@@ -4,10 +4,15 @@
     </span>
   </td>
   <td class="<%= name %>_named_cell_data">
-    <% cell_id = "#{cell.name}_#{id}_in_place_editor" 
-       url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/named_cell_inplace_edit/#{id}?spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}" %>
-    <u><span class="in_place_editor_field" id="<%= cell_id %>"><%= ((_tmp = object.send(cell.name)) ? _tmp : '-') %></span></u>
+    <%
+      cell_id = "#{cell.name}_#{id}_in_place_editor"
+      url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/named_cell_inplace_edit/#{id}?spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}"
+    %>
+    <u><span class="in_place_editor_field" id="<%= cell_id %>"><%=h replace_blank(object.send(cell.name)) %></span></u>
 
-    <% ret = "<script type=\"text/javascript\">\n//<![CDATA[\nnew Ajax.InPlaceDateEditor('#{cell_id}', '#{url}')\n//]]>\n</script>" %>
-    <%= ret %>
+    <script type="text/javascript">
+      //<![CDATA[
+      new Ajax.InPlaceDateEditor('<%= cell_id %>', '<%= url %>')
+      //]]>
+    </script>
   </td>
