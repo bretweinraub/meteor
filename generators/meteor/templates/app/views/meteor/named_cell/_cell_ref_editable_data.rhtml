@@ -1,24 +1,29 @@
+<%
+  cell_id = "#{cell.name}_#{id}_select_editor"
+  #url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/meteor/#{id}?name=#{spec.name}&actionname=inplace_select_edit&widget_class=NamedCell&cell_id=#{cell_id}&spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}&path=#{spec.path}"
+  url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/named_cell_inplace_edit/#{id}?spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}&ref=true"
+  ref_object = object.send(cell.name)
+  value = ""
+  [:name, :to_label, :to_s].each do |method|
+    if ref_object.respond_to? method
+      value = ref_object.send(method)
+      break
+    end
+  end
+  if value.blank?
+    value = '-'
+  end
+%>
 
-      <% cell_id = "#{cell.name}_#{id}_select_editor"
-         url = "/#{Meteor::Util.controller_to_url(spec.controller_class)}/meteor/#{id}?name=#{spec.name}&actionname=inplace_select_edit&widget_class=NamedCell&cell_id=#{cell_id}&spec=#{name}&object_class=#{object.class}&cell_name=#{cell.name}&path=#{spec.path}"
-         if _tmp = object.send(cell.name)
-           if _tmp.is_a? String
-             data = _tmp
-           else
-             [:name,:to_label,:to_s].each do |meth|
-                if _tmp.respond_to?(meth)
-                  data = _tmp.send(meth)
-                  break
-                end
-             end
-           end
-         else
-           data = "N/A"
-         end %>
+<u><span class="in_place_editor_field" id="<%= cell_id %>"><%=h value %></span></u>
 
-      <u><span class="in_place_editor_field" id="<%= cell_id %>"><%=h data ? data : "N/A" %></span></u>
-
-      <%= in_place_select_editor(cell_id, {:url => url,
-                                           :select_options => cell.options(object),
-                                           :asynchronous => 'true',
-                                           :evalScripts  => 'true'}) %>
+<script type="text/javascript">
+  //<![CDATA[
+  new Ajax.InPlaceCollectionEditor('<%= cell_id %>', '<%= url %>', {
+    <% if ref_object %>
+      value: <%= ref_object.id %>,
+    <% end %>
+    collection: <%= cell.options(object).collect{ |o| o.reverse }.to_json %>
+  })
+  //]]>
+</script>

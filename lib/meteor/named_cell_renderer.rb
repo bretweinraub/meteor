@@ -2,9 +2,9 @@ module Meteor
 
   class NamedCellRenderer < RendererBase
 
-    ################################################################################ 
+    ################################################################################
 
-    
+
     #
     # deprecated; use data_for_render()
     #
@@ -13,13 +13,13 @@ module Meteor
       ckebug 0, "Deprecated; use data_for_render()"
       if val = instance_variable_get("@object")
         val
-      else 
+      else
         # load object if it hasn't been loaded yet
         self.object = spec.klass.find(id)
       end
     end
-    
-    ################################################################################ 
+
+    ################################################################################
 
     def do_crud_inplace_select_edit(page,params)
       begin
@@ -35,7 +35,7 @@ module Meteor
 
         cell = spec.find_cell_by_name(cell_name.to_sym)
 
-        new_value = object.send(cell_name) 
+        new_value = object.send(cell_name)
         if new_value.is_a? String
           display_value = new_value
         else
@@ -46,9 +46,9 @@ module Meteor
             end
           end
         end
-        
+
         page.replace_html cell_id, display_value
-        
+
         cell.send(:event_handler,:after_render,
                   {
                     :renderer => self,
