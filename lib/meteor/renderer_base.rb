@@ -1,28 +1,25 @@
-require 'meteor'
-require 'ruby-debug'
-
 module Meteor
-  
+
   ################################################################################
   ################################################################################
-  
+
   class RendererBase < CkuruTools::HashInitializerClass
 
     #
     # :debug_exceptions : if set, exceptions will launch the debugger
-    # 
+    #
 
     attr_accessor :debug_exceptions
 
 
     #
     # :frontend - where to look for partials.  Currently defaults to "meteor"
-    # 
+    #
 
     attr_accessor :frontend
 
     #
-    # All generated HTML element IDs will start with this prefix.  Defaults to 
+    # All generated HTML element IDs will start with this prefix.  Defaults to
     # "#{frontend}_#{spec.name}_#{id}" unless htmlprefix
     #
 
@@ -39,12 +36,12 @@ module Meteor
     #
     # For a widget rendered on an object, defined here.
     #
-    
+
     attr_accessor :object
 
     #
     # :event : allows the default partial to be overriden (from  _render.rhtml)
-    # 
+    #
 
     attr_accessor :event
 
@@ -54,7 +51,7 @@ module Meteor
 
     attr_accessor :controller # right not we are building in the assumption you are running from
                               # an ActionController::Base object (aka Rails).
-    
+
     ################################################################################
 
     def controller_path
@@ -84,7 +81,7 @@ module Meteor
 
     #
     # See the metor cookbook for discuss of the partial algorithm.
-    # 
+    #
 
     def conditionally_render_partial(partial_spec, *args, &block)
       ret = nil
@@ -105,7 +102,7 @@ module Meteor
         controller.instance_variable_set("@meteor_args", args[0])
 #       http://www.omninerd.com/articles/render_to_string_in_Rails_Models_or_Rake_Tasks
 #         Rails.cache.write(
-#                           "cache_var", 
+#                           "cache_var",
         render_hash = {
           :args => args[0],
           :renderer => self,
@@ -115,7 +112,7 @@ module Meteor
         # this has a net affect of creating a local in the partial for any non-nil attribute on this renderer
         #
         # thus a partial can just call 'object', for example.
-        
+
         instance_variables.each do |iv|
           # iv = "@id"
           # renderer[:id] = self.id
@@ -138,7 +135,7 @@ module Meteor
       else
         # failsafe block
         if self.respond_to?("render_#{partial_spec}".to_sym)
-          ret = send("render_#{partial_spec}",*args,&block) 
+          ret = send("render_#{partial_spec}",*args,&block)
         else
           raise "nothing found to render for #{partial_spec}."
           ckebug 0, "nothing found to render for #{partial_spec}"
@@ -147,7 +144,7 @@ module Meteor
       end
       ret
     end
-    
+
 
     ################################################################################
 
@@ -156,18 +153,18 @@ module Meteor
         @sqlcache = {}
 #        self.debug_exceptions = true
 
-        self.event = h[:event] || :render 
+        self.event = h[:event] || :render
 
-        super h      
+        super h
 
         if object
           self.id = object.id
         end
-        raise ":id (or :object), :spec, and :controller must be set in #{current_method}" unless 
+        raise ":id (or :object), :spec, and :controller must be set in #{current_method}" unless
           id and spec and controller
-        raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless 
+        raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless
           controller.is_a? ::ActionController::Base
-        raise "cannot derive ActionView::Base template from controller" unless 
+        raise "cannot derive ActionView::Base template from controller" unless
           @template = controller.instance_variable_get("@template")
 
         raise "set :frontend in #{current_method}" unless frontend
@@ -176,7 +173,7 @@ module Meteor
         def @template.partial_check_order(*args)
           #
           # ActionView#Base can have multiple view paths (I didn't know that when I first wrote this).
-          # Ultimately I think Meteor should have used this feature instead of pushing its views into 
+          # Ultimately I think Meteor should have used this feature instead of pushing its views into
           # $RAILS_ROOT/app/views/meteor.
           #
           # TODO: break this dependency; allow for rails widget snippets to go anywhere.
@@ -186,11 +183,11 @@ module Meteor
             args.each do |file_to_check|
               return file_to_check if (
                                        File.exists?("#{view_path}/#{file_to_check}.erb") or
-                                       File.exists?("#{view_path}/#{file_to_check}.rhtml") 
+                                       File.exists?("#{view_path}/#{file_to_check}.rhtml")
                                        )
-                                       
 
-              
+
+
 
             end
           end
@@ -217,12 +214,12 @@ module Meteor
     end
 
     ################################################################################
-    
+
     def render(h={})
       h.merge!(:htmlprefix => htmlprefix,
                :sql => sql,
                :name => name)
-      
+
       begin
         conditionally_render_partial(event,h)  # event is set when the Renderer is created.
       rescue Exception => e
@@ -233,14 +230,14 @@ module Meteor
         raise e
       end
     end
- 
+
     ################################################################################
 
     def render_child(h={},extras={})
       child=h[:child]
       row=h[:row]
       child_class = child.class.renderer_class
-      
+
       renderer = child_class.new(:spec => child,
                                  :controller => controller,
                                  :frontend => frontend,
@@ -279,7 +276,7 @@ module Meteor
     end
 
     ################################################################################
-    
+
     def do_crud(action,page,params)
       self.send("do_crud_#{action}",page,params)
     end
@@ -300,12 +297,12 @@ module Meteor
         end
 
         puts error_msg
-        
+
         page.hide indicator if indicator
         page.replace_html error_div, conditionally_render_partial(:error,{:error => error_msg, :div => error_div}) if error_div
         page.show error_div if error_div
       end
-        
+
     end
 
     def data_for_render
