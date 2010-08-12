@@ -1,7 +1,7 @@
 module Meteor
   module Widget
     module NamedCell
-      class Spec < Meteor::SpecBase
+      class Spec < ::Meteor::SpecBase
         attr_accessor :rows
         attr_accessor :column_hash
         attr_accessor :max_columns
