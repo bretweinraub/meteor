@@ -48,16 +48,12 @@ module Meteor
           raise "no such variable :path found in params in #{current_method}" unless path = params[:path]
 
 
-          raise "#{widget_class}Spec not defined" unless
-            spec_klass = Meteor.const_get("#{widget_class}Spec")
-
+          spec_klass = "Meteor::Widget::#{widget_class}::Spec".constantize
           spec_name = path.split(/\./)[1]
           spec = spec_klass.find_by_path(:spec => meteor_spec(:name => spec_name),
                                          :path => path)
 
-          raise "#{widget_class}Renderer not defined" unless
-            renderer_class = Meteor.const_get("#{widget_class}Renderer")
-
+          renderer_class = "Meteor::Widget::#{widget_class}::Renderer".constantize
           renderer = renderer_class.new(:spec => spec,
                                         :controller => self,
                                         :params => params,
@@ -79,7 +75,7 @@ module Meteor
 
         rescue Exception => e
           render :update do |page|
-            page.replace_html error_div, MeteorCrudBase.error_msg_html(e) if error_div
+            page.replace_html error_div, Base.error_msg_html(e) if error_div
             page.show error_div if error_div
             page.hide indicator if indicator
           end
