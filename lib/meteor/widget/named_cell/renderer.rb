@@ -1,7 +1,7 @@
 module Meteor
   module Widget
     module NamedCell
-      class Renderer < Meteor::RendererBase
+      class Renderer < ::Meteor::RendererBase
         # deprecated; use data_for_render()
         def object
           ckebug 0, "Deprecated; use data_for_render()"
