@@ -1,7 +1,7 @@
 module Meteor
   module Widget
     module Meteor
-      class Renderer < RendererBase
+      class Renderer < ModelRendererBase
         def crud_add_render(h={})
           newobj = h[:newobj]
           page = h[:page]
