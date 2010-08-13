@@ -83,8 +83,7 @@ module Meteor
 
       self.name  = _klass unless name
       self.default_frontend  = _klass unless default_frontend
-      self.title = "#{name}" unless title
-      self.path  = path ? "#{path}.#{name}" : ".#{name}"
+
     end
     
     ################################################################################

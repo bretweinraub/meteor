@@ -38,6 +38,7 @@ module Meteor
       end
 
       def meteor
+
         actionname = params["actionname"] # =>"add",
         id = params[:id] # =>"6088",
         widget_class = params[:widget_class]
@@ -47,11 +48,12 @@ module Meteor
         begin
           raise "no such variable :path found in params in #{current_method}" unless path = params[:path]
 
-
           spec_klass = "Meteor::Widget::#{widget_class}::Spec".constantize
           spec_name = path.split(/\./)[1]
           spec = spec_klass.find_by_path(:spec => meteor_spec(:name => spec_name),
                                          :path => path)
+
+          raise "cannot find a meteor spec with name #{spec_name}." unless spec
 
           renderer_class = "Meteor::Widget::#{widget_class}::Renderer".constantize
           renderer = renderer_class.new(:spec => spec,

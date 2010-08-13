@@ -33,6 +33,8 @@ module Meteor
           self.send(attr)
       end
 
+      self.title = "#{name}" unless title
+      self.path  = path ? "#{path}.#{name}" : ".#{name}"
 
     end
   end
