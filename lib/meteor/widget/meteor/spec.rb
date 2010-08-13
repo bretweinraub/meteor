@@ -1,7 +1,7 @@
 module Meteor
   module Widget
     module Meteor
-      class Spec < ::Meteor::SpecBase
+      class Spec < ::Meteor::ModelSpecBase
 
         # if true, the user can delete the record
         attr_accessor :delete

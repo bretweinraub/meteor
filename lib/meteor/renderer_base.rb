@@ -32,12 +32,14 @@ module Meteor
 
     # override this to change the search order of conditionally_render_partial()
     def partial_search_order(partial)
-      ["#{controller_path}/_#{frontend}_#{name.de_camelize}_#{partial}",
-       "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{name.de_camelize}_#{partial}",
-       "#{controller_path}/_#{frontend}_#{partial}",
-       "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{partial}",
-       "meteor/#{frontend}/_#{partial}",
-       "meteor/default/_#{partial}"]
+      ret = []
+      ret << "#{controller_path}/_#{frontend}_#{name.de_camelize}_#{partial}"
+      ret << "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{name.de_camelize}_#{partial}" if spec.respond_to? :controller_class
+      ret << "#{controller_path}/_#{frontend}_#{partial}"
+      ret << "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{partial}" if spec.respond_to? :controller_class
+      ret << "meteor/#{frontend}/_#{partial}"
+      ret << "meteor/default/_#{partial}"
+      ret
     end
 
     # See the metor cookbook for discuss of the partial algorithm.
@@ -113,6 +115,10 @@ module Meteor
           controller.is_a? ::ActionController::Base
         raise "cannot derive ActionView::Base template from controller" unless
           @template = controller.instance_variable_get("@template")
+        unless frontend
+          self.frontend = spec.default_frontend
+        end
+
         raise "set :frontend in #{current_method}" unless frontend
 
         # allows an array of partials to be checked for existence; return the first one found.

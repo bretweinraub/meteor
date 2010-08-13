@@ -9,18 +9,12 @@ module Meteor
     #
 
     attr_accessor :children
+
+    #
+    # This is default frontend to render a widget of this. Defaults to a the de_camelized name of the klass.
+    # 
     
-    #
-    # controller_class : application controller that will receive CRUD events
-    # 
-
-    attr_accessor :controller_class
-
-    #
-    # klass : active record class object for records 
-    # 
-
-    attr_accessor :klass
+    attr_accessor :default_frontend
 
     #
     # name : unique name for this meteor object.  Defaults to a the de_camelized name of the klass.
@@ -43,6 +37,7 @@ module Meteor
     attr_accessor :title
 
     ################################################################################
+
 
     def renderer_class
       raise "you must define the renderer class that will render this spec"
@@ -68,7 +63,7 @@ module Meteor
     def add_child(h={})
       child = Spec.new do |s|
         s.path = path
-        s.controller_class = controller_class
+        s.controller_class = controller_class if self.respond_to? :controller_class
         s.parent = self
         yield s if block_given?
       end
@@ -83,12 +78,11 @@ module Meteor
 
       yield self if block_given?
 
-      [:controller_class, :klass].each do |attr|
-        raise "you must initialize a #{self.class} with a :#{attr} argument" unless
-          self.send(attr)
-      end
+      _klass = self.class.to_s.de_camelize
+      _klass = self.class.parent.to_s.split(/::/).last.de_camelize
 
-      self.name  = self.klass.to_s.de_camelize unless name
+      self.name  = _klass unless name
+      self.default_frontend  = _klass unless default_frontend
       self.title = "#{name}" unless title
       self.path  = path ? "#{path}.#{name}" : ".#{name}"
     end
