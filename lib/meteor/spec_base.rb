@@ -38,9 +38,22 @@ module Meteor
 
     ################################################################################
 
+    def self.renderer_class
+      ::Meteor::RendererBase
+#      raise "you must define the renderer class that will render this spec"
+    end
 
-    def renderer_class
-      raise "you must define the renderer class that will render this spec"
+    #
+    # render()
+    #
+    # factory method to render a widget:
+    #
+    #     meteor_spec(header).render(controller => self)
+    #
+    # 
+
+    def render(h={})
+      self.class.renderer_class.new(h.merge!(:spec => self)).render
     end
 
     def self.find_by_path(h={})
