@@ -8,8 +8,7 @@ module Meteor
         def initialize(h={},&block)
           self.separator_row = false
           self.cell_list = []
-          super(h,&block)
-          yield self if block_given?
+          super(h, &block)
         end
       end
     end
