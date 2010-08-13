@@ -3,7 +3,7 @@ module Meteor
   ################################################################################
   ################################################################################
   
-  class SpecBase
+  class SpecBase < CkuruTools::HashInitializerClass
     #
     # children : these are embedded meteors (meteorites).  
     #
@@ -73,10 +73,10 @@ module Meteor
 
     ################################################################################
     
-    def initialize(h={})
+    def initialize(h={},&block)
       self.children = []
 
-      yield self if block_given?
+      super(h,&block)
 
       _klass = self.class.to_s.de_camelize
       _klass = self.class.parent.to_s.split(/::/).last.de_camelize

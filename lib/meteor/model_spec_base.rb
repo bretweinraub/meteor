@@ -21,16 +21,19 @@ module Meteor
     # for widgets that are linked to database objects
 
     def initialize(h={},&block)
+
       super(h,&block)
+
+      _klass = self.klass.to_s.de_camelize
+
+      self.name  = _klass unless h[:name]
 
       [:controller_class, :klass].each do |attr|
         raise "you must initialize a #{self.class} with a :#{attr} argument" unless
           self.send(attr)
       end
 
-      _klass = self.klass.to_s.de_camelize
-      self.name  = _klass unless name
-      self.default_frontend  = _klass unless default_frontend
+
     end
   end
 end
