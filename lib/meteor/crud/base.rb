@@ -1,7 +1,7 @@
 module Meteor
   module Crud
     module Base
-      def self.error_msg_html(e)
+      def self.error_msg_html(e,error_div)
         error_msg = e.to_s
         if e.respond_to?(:backtrace)
           e.backtrace.each do |trace|
@@ -14,7 +14,7 @@ module Meteor
               <td>
                 <div id="warning_clear">
           	<a href="#"
-              onclick="Effect.SlideUp('warning_bar', { duration: 0.5 })">
+              onclick="Effect.SlideUp('#{error_div}', { duration: 0.5 })">
               clear message
             </a>
                 </div>
@@ -31,7 +31,7 @@ module Meteor
           </table>
 
           <script>
-          $('warning_bar').show();
+          $('#{error_div}').show();
           </script>
           }
 
@@ -52,7 +52,7 @@ module Meteor
           spec_name = path.split(/\./)[1]
           spec = spec_klass.find_by_path(:spec => meteor_spec(:name => spec_name),
                                          :path => path)
-
+          
           raise "cannot find a meteor spec with name #{spec_name}." unless spec
 
           renderer_class = "Meteor::Widget::#{widget_class}::Renderer".constantize
@@ -77,7 +77,7 @@ module Meteor
 
         rescue Exception => e
           render :update do |page|
-            page.replace_html error_div, Base.error_msg_html(e) if error_div
+            page.replace_html error_div, Base.error_msg_html(e,error_div) if error_div
             page.show error_div if error_div
             page.hide indicator if indicator
           end
