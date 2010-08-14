@@ -43,6 +43,10 @@ module Meteor
 #      raise "you must define the renderer class that will render this spec"
     end
 
+    def renderer_class
+      self.renderer_class
+    end
+
     #
     # render()
     #
