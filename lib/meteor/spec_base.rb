@@ -37,11 +37,18 @@ module Meteor
     attr_accessor :title
 
     ################################################################################
+    #
+    # renderer_class()
+    #
+    # Return the renderer class associated with this widget.
+    #
 
     def self.renderer_class
       ::Meteor::RendererBase
-#      raise "you must define the renderer class that will render this spec"
     end
+
+    #
+    # syntactic sugar for renderer_class
 
     def renderer_class
       self.renderer_class
@@ -52,13 +59,18 @@ module Meteor
     #
     # factory method to render a widget:
     #
-    #     meteor_spec(header).render(controller => self)
+    #     spec.render(controller => self)
     #
     # 
 
     def render(h={})
       self.class.renderer_class.new(h.merge!(:spec => self)).render
     end
+
+    #
+    # For specs with addressing "path"s, recurse through the parent/child relationships
+    # to find the spec that matches a "path".
+    #
 
     def self.find_by_path(h={})
       raise "set :spec and :path in #{current_method}; args are #{h.inspect}" unless spec = h[:spec] and path = h[:path]
