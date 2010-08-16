@@ -3,24 +3,18 @@ module Meteor
   ################################################################################
   ################################################################################
   
-  class SpecBase
+  class SpecBase < CkuruTools::HashInitializerClass
     #
     # children : these are embedded meteors (meteorites).  
     #
 
     attr_accessor :children
+
+    #
+    # This is default frontend to render a widget of this. Defaults to a the de_camelized name of the klass.
+    # 
     
-    #
-    # controller_class : application controller that will receive CRUD events
-    # 
-
-    attr_accessor :controller_class
-
-    #
-    # klass : active record class object for records 
-    # 
-
-    attr_accessor :klass
+    attr_accessor :default_frontend
 
     #
     # name : unique name for this meteor object.  Defaults to a the de_camelized name of the klass.
@@ -43,10 +37,40 @@ module Meteor
     attr_accessor :title
 
     ################################################################################
+    #
+    # renderer_class()
+    #
+    # Return the renderer class associated with this widget.
+    #
+
+    def self.renderer_class
+      ::Meteor::RendererBase
+    end
+
+    #
+    # syntactic sugar for renderer_class
 
     def renderer_class
-      raise "you must define the renderer class that will render this spec"
+      self.renderer_class
     end
+
+    #
+    # render()
+    #
+    # factory method to render a widget:
+    #
+    #     spec.render(controller => self)
+    #
+    # 
+
+    def render(h={})
+      self.class.renderer_class.new(h.merge!(:spec => self)).render
+    end
+
+    #
+    # For specs with addressing "path"s, recurse through the parent/child relationships
+    # to find the spec that matches a "path".
+    #
 
     def self.find_by_path(h={})
       raise "set :spec and :path in #{current_method}; args are #{h.inspect}" unless spec = h[:spec] and path = h[:path]
@@ -68,7 +92,7 @@ module Meteor
     def add_child(h={})
       child = Spec.new do |s|
         s.path = path
-        s.controller_class = controller_class
+        s.controller_class = controller_class if self.respond_to? :controller_class
         s.parent = self
         yield s if block_given?
       end
@@ -78,19 +102,17 @@ module Meteor
 
     ################################################################################
     
-    def initialize(h={})
+    def initialize(h={},&block)
       self.children = []
 
-      yield self if block_given?
+      super(h,&block)
 
-      [:controller_class, :klass].each do |attr|
-        raise "you must initialize a #{self.class} with a :#{attr} argument" unless
-          self.send(attr)
-      end
+      _klass = self.class.to_s.de_camelize
+      _klass = self.class.parent.to_s.split(/::/).last.de_camelize
 
-      self.name  = self.klass.to_s.de_camelize unless name
-      self.title = "#{name}" unless title
-      self.path  = path ? "#{path}.#{name}" : ".#{name}"
+      self.name  = _klass unless name
+      self.default_frontend  = _klass unless default_frontend
+
     end
     
     ################################################################################
