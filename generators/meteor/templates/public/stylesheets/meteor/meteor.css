@@ -1,0 +1,66 @@
+.named_cell_label {
+    padding: 5px 6px 5px 6px;
+    vertical-align: top;
+    text-align: right;
+    background-color: #FFF;
+}
+
+.named_cell_data {
+    padding: 5px 6px 5px 6px;
+    vertical-align: top;
+    text-align: left;
+    background-color:#FFF;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+
+table.meteor_contract_product_table td {
+    background: #ffcc33;
+    border: 1px solid #000;
+}
+
+table.meteor_contract_product_table a, th {
+
+    background:#F1F1F1 none repeat scroll 0 0;
+    border:1px solid #CCCCCC;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+
+td.meteor_table_actions_call {
+    background: #555555;
+    /* margin: 0 auto; */
+    border: 1px solid #444;
+    background-color: #ee5555;
+    background-color: #fdfc62;
+    display: table;
+}
+
+.meteor_borderbox {
+    border:1px solid #888;
+    margin:0 0 10px 0;
+    padding:0;
+    font-size: 13px;
+}
+
+.named_cell_borderbox {
+    border:1px solid #888;
+    margin:0 0 10px 0;
+    padding:0;
+
+}
+
+
+.meteor_error {
+     border: 2px solid rgb(255, 0, 0);
+}
+
+
+td.meteor_panebox {
+    background-color:#CCCCCC;
+    font-size:14px;
+    font-weight:bold;
+    text-transform:uppercase;
+}

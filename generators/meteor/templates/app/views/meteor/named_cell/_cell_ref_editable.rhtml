@@ -1,9 +1,9 @@
-  <td class="<%= name %>_named_cell_label">
+  <td class="<%= name %> named_cell_label">
     <span title="<%= cell.edit ? "click the data to edit the #{cell.title}" : cell.title %>">
       <%= cell.title %>:
     </span>
   </td>
-  <td class="<%= name %>_named_cell_data">
+  <td class="<%= name %> named_cell_data">
     <div id="<%= cell.name %>_<%= id %>_data">
       <%= renderer.conditionally_render_partial(:cell_ref_editable_data,args) %>
     </div>
