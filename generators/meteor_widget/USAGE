@@ -1,8 +1,11 @@
 Description:
-    Explain the generator
+    Creates a new "basic" (HTML-only) meteor widget.  Not a fancy crud widget, just a HTML widget.
 
 Example:
-    ./script/generate meteor Thing
+    ./script/generate meteor_widget hello_world
 
     This will create:
-        what/will/it/create
+      dir  lib/meteor/widget/hello_world
+      file lib/meteor/widget/hello_world/spec.rb
+      dir  app/views/meteor/hello_world
+      file app/views/meteor/hello_world/_render.rhtml      
