@@ -147,7 +147,7 @@ module Meteor
           nil
         end
 
-        self.htmlprefix = "#{frontend}_#{spec.name}_#{id}" unless htmlprefix
+        self.htmlprefix = "#{frontend}_#{spec.name}_#{object_id}" unless htmlprefix
 
         #
         # If the spec has defined a callback to alter the renderer, call it.
