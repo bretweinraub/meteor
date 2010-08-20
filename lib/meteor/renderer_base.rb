@@ -119,7 +119,7 @@ module Meteor
         else
           @template = ActionView::Base.new
           raise "set RAILS_ROOT" unless RAILS_ROOT
-          @tamplate.view_paths.push "#{RAILS_ROOT}/app/views"
+          @template.view_paths.push "#{RAILS_ROOT}/app/views"
         end
 
         self.frontend = frontend || spec.default_frontend
