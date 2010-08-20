@@ -23,7 +23,7 @@ module Meteor
     attr_accessor :controller
 
     def controller_path
-      controller.controller_path
+      controller ? controller.controller_path : nil
     end
 
     def name
@@ -33,9 +33,9 @@ module Meteor
     # override this to change the search order of conditionally_render_partial()
     def partial_search_order(partial)
       ret = []
-      ret << "#{controller_path}/_#{frontend}_#{name.de_camelize}_#{partial}"
+      ret << "#{controller_path}/_#{frontend}_#{name.de_camelize}_#{partial}" if controller
       ret << "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{name.de_camelize}_#{partial}" if spec.respond_to? :controller_class
-      ret << "#{controller_path}/_#{frontend}_#{partial}"
+      ret << "#{controller_path}/_#{frontend}_#{partial}" if controller
       ret << "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{partial}" if spec.respond_to? :controller_class
       ret << "meteor/#{frontend}/_#{partial}"
       ret << "meteor/default/_#{partial}"
@@ -57,7 +57,7 @@ module Meteor
       end
 
       if partial_to_render
-        controller.instance_variable_set("@meteor_args", args[0])
+        controller.instance_variable_set("@meteor_args", args[0]) if controller
 #       http://www.omninerd.com/articles/render_to_string_in_Rails_Models_or_Rake_Tasks
 #         Rails.cache.write(
 #                           "cache_var",
@@ -109,15 +109,21 @@ module Meteor
 
         super h
 
-        raise ":spec and :controller must be set in #{current_method}" unless
-          spec and controller
-        raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless
-          controller.is_a? ::ActionController::Base
-        raise "cannot derive ActionView::Base template from controller" unless
-          @template = controller.instance_variable_get("@template")
-        unless frontend
-          self.frontend = spec.default_frontend
+        raise ":spec and must be set in #{current_method}" unless
+          spec 
+        if controller
+          raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless
+            controller.is_a? ::ActionController::Base
+          raise "cannot derive ActionView::Base template from controller" unless
+            @template = controller.instance_variable_get("@template")
+        else
+          @template = ActionView::Base.new
+          raise "set RAILS_ROOT" unless RAILS_ROOT
+          @tamplate.view_paths.push "#{RAILS_ROOT}/app/views"
         end
+
+        self.frontend = frontend || spec.default_frontend
+
 
         raise "set :frontend in #{current_method}" unless frontend
 
