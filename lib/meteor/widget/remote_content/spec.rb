@@ -22,6 +22,7 @@ module Meteor
         def initialize(options={},&block)
           super(options,&block)
         end
+        
       end
     end
   end
