@@ -33,6 +33,12 @@ module Meteor
     # override this to change the search order of conditionally_render_partial()
     def partial_search_order(partial)
       ret = []
+      if spec.respond_to?(:initial_partial_search_order)
+        spec.initial_partial_search_order.each do |initial|
+          ret << "#{initial}/_#{partial}"
+        end
+      end
+
       ret << "#{controller_path}/_#{frontend}_#{name.de_camelize}_#{partial}" if controller
       ret << "#{spec.controller_class.to_s.de_camelize}/_#{frontend}_#{name.de_camelize}_#{partial}" if spec.respond_to? :controller_class
       ret << "#{controller_path}/_#{frontend}_#{partial}" if controller
@@ -114,13 +120,14 @@ module Meteor
         if controller
           raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless
             controller.is_a? ::ActionController::Base
-          raise "cannot derive ActionView::Base template from controller" unless
-            @template = controller.instance_variable_get("@template")
-        else
-          @template = ActionView::Base.new
-          raise "set RAILS_ROOT" unless RAILS_ROOT
-          @template.view_paths.push "#{RAILS_ROOT}/app/views"
+          # raise "cannot derive ActionView::Base template from controller" unless
+          #   @template = controller.instance_variable_get("@template")
         end
+
+        @template = ActionView::Base.new
+        raise "set RAILS_ROOT" unless RAILS_ROOT
+        @template.view_paths << "#{RAILS_ROOT}/vendor/plugins"
+        @template.view_paths += ActionController::Base.view_paths
 
         self.frontend = frontend || spec.default_frontend
 
