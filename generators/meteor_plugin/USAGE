@@ -1,0 +1,6 @@
+Description:
+    Creates a new plugin for distributing meteor widgets!
+
+Example:
+    ./script/generate meteor_widget hello_world
+
