@@ -1,4 +1,3 @@
-require 'ruby-debug'
 
 module Meteor
   class RendererBase < CkuruTools::HashInitializerClass
@@ -130,7 +129,6 @@ EOF
               end
             end
           else
-            debugger
             partial_search_order(partial_spec).each do |p|
               error_msg += "#{p}\n"
             end
