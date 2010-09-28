@@ -1,3 +1,5 @@
+require 'ruby-debug'
+
 module Meteor
   class RendererBase < CkuruTools::HashInitializerClass
     # :debug_exceptions : if set, exceptions will launch the debugger
@@ -101,9 +103,43 @@ module Meteor
         if self.respond_to?("render_#{partial_spec}".to_sym)
           ret = send("render_#{partial_spec}",*args,&block)
         else
-          raise "nothing found to render for #{partial_spec}."
+          error_msg = <<EOF
+
+<pre>
+
+Nothing was found to render for partial spec \"_#{partial_spec}\" of class 
+#{spec.class}.  
+The following output is intended to help you debug this issue.
+
+** First off, the following are the base view paths available in the 
+ActionView template we are using:
+EOF
+
+          @template.view_paths.each {|x| error_msg += "\n#{x}"}
+
+          error_msg += "
+
+** Within the paths above, the following actual files were looked for:
+
+"
+
+          if partial_spec.is_a? Array
+            partial_spec.each do |partial|
+              partial_search_order(partial).each do |p|
+                error_msg += "#{p}\n"
+              end
+            end
+          else
+            debugger
+            partial_search_order(partial_spec).each do |p|
+              error_msg += "#{p}\n"
+            end
+          end
+
+          error_msg += "\nHopefully that helps.</pre>"
+
           ckebug 0, "nothing found to render for #{partial_spec}"
-          ret = "no such partial #{partial_spec}" # hmmm....
+          ret = error_msg
         end
       end
       ret
