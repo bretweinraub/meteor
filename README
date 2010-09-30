@@ -1,4 +1,65 @@
-Meteor
-======
+<h1>What</h1>
+ 
+Meteor is a stateless widget framework for Ruby on Rails released under the MIT License.
+ 
+ 
+<h1>Why</h1>
+ 
+Meteor supports the construction of complex UI widgets that:
+<ul>
+<li>Can be reused in multiple applications;</li>
+<li>Can be "parameterized" via metadata or "specifications";</li>
+<li>Offer extension points to override default behavior;</li>
+<li>Can be simply and easily distributed, installed, and rendered.</li>
+</ul>
+ 
+<br/>
+Meteor is a low overhead framework to DRY out your partials.  Some existing widgets include:
+A menu system that can be embedded anywhere (but most usefully in application layout templates);
+Hierarchical collapsible form builders driven by model relationships and attributes;
+A remote content proxy for white-labeling application functionality with third-party styling, headers, footers, etc.
+ 
+<h1>How</h1>
+ 
+<p>
+The Meteor framework installs as a Rails plugin.  Widgets also install as plugins.  Meteor contains generators that allow anyone to construct their own widget plugins.  Once a widget is installed, it can be rendered via a one-liner.
+</p>
+<p><br/></p>
 
-Description goes here
+<p>
+Starting from scratch, you can be rendering an existing meteor widget in your application in two minutes.
+</p>
+<p><br/></p>
+ 
+<p>
+Meteor uses core Ruby and Rails building blocks:  classes, ERB templates, and plugins.  A widget requires a minimum of two files:  a ruby "specification" class and a default partial.  The rest of the required infrastructure is unfurled via rails generators. 
+</p>
+<p><br/></p>
+
+<p>
+Blog posts and documentation describing the above is available (see Where below).
+ 
+</p>
+ 
+<h1>Who</h1>
+
+Meteor has been a collaboration between Bret Weinraub, Tyler Lesmann, and Kevin Weller.
+ 
+We all work for <a href="http://www.aura-software.com"><img src="http://www.aura-software.com/images/aura-logo.png?1285673513" height="12" width="30"/></a>  Software, but Meteor is <a href="http://en.wikipedia.org/wiki/MIT_License">open source</a>.  
+
+<p><br/></p>
+
+
+ 
+<h1>Where</h1>
+
+<ul> 
+<li><a href="http://github.com/bretweinraub/meteor">Github:</a>  http://github.com/bretweinraub/meteor</li>
+<li><a href="http://www.aura-software.com/entries/4-about-the-meteor-plugin">Blog/Docs:</a>  http://www.aura-software.com/entries/4-about-the-meteor-plugin</li>
+<li><a href="http://meteor_catalog.aura-software.com">Widget catalog:</a>  http://meteor_catalog.aura-software.com</li>
+<li><a href="http://groups.google.com/group/meteor-plugin">Discussion group:</a>  http://groups.google.com/group/meteor-plugin</li>
+<li><a href="mailto:meteor@aura-software.com">Direct contact:</a>  mailto:meteor@aura-software.com</li>
+</ul>
+
+    
+<center><a href="http://www.aura-software.com"><img src="http://www.aura-software.com/images/aura-logo.png?1285673513" height="30" width="100"/></a>
