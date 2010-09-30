@@ -38,7 +38,7 @@ Blog posts and documentation describing the above is available (see Where below)
     http://meteor\_catalog.aura-software.com
 *   [Discussion group:](http://groups.google.com/group/meteor-plugin)
     http://groups.google.com/group/meteor-plugin
-*   [Direct contact:](http://www.aura-software.com/contact)
+*   [Direct contact](http://www.aura-software.com/contact) http://www.aura-software.com/contact
 # Who
 
 [Aura Software LLC](http://www.aura-software.com)
