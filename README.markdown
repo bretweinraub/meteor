@@ -34,8 +34,8 @@ Blog posts and documentation describing the above is available (see Where below)
     http://github.com/bretweinraub/meteor
 *   [Blog/Docs:](http://www.aura-software.com/entries/4-about-the-meteor-plugin)
     http://www.aura-software.com/entries/4-about-the-meteor-plugin
-*   [Widget catalog:](http://meteor_catalog.aura-software.com)
-    http://meteor\_catalog.aura-software.com
+*   [Widget catalog:](http://meteor-catalog.aura-software.com)
+    http://meteor-catalog.aura-software.com
 *   [Discussion group:](http://groups.google.com/group/meteor-plugin)
     http://groups.google.com/group/meteor-plugin
 *   [Direct contact](http://www.aura-software.com/contact) http://www.aura-software.com/contact
