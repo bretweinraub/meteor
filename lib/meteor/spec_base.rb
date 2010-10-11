@@ -17,6 +17,12 @@ module Meteor
     attr_accessor :default_frontend
 
     #
+    # :klass_name is synonymous with "widget_name"; its our immutable name as derived from the ruby class name.
+    #
+
+    attr_reader :klass_name
+
+    #
     # name : unique name for this meteor object.  Defaults to a the de_camelized name of the klass.
     #
 
@@ -35,6 +41,17 @@ module Meteor
     #
 
     attr_accessor :title
+
+    ################################################################################
+    #
+    # widget_name
+    #
+    # "klass" name of this widget; not to be confused with a proper name.  So if a widget was a person
+    # the klass/widget name is "person", but the 'name' might be Mike or Jane.
+    
+    def widget_name
+      @klass_name
+    end
 
     ################################################################################
     #
@@ -109,6 +126,7 @@ module Meteor
 
       _klass = self.class.to_s.de_camelize
       _klass = self.class.parent.to_s.split(/::/).last.de_camelize
+      @klass_name = _klass
 
       self.name  = _klass unless name
       self.default_frontend  = _klass unless default_frontend

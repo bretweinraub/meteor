@@ -5,7 +5,7 @@
 module Meteor
   class PluginSpecBase < SpecBase
     def initial_partial_search_order
-      File.join(plugin_name,'templates',plugin_name)
+      File.join(plugin_name,'templates',widget_name)
     end
   end
 end
