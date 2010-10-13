@@ -1,0 +1,48 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+require 'ckuru-tools'
+
+desc 'Default: run unit tests.'
+task :default => :test
+
+desc 'Test the <%= file_name %> plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+desc 'Generate documentation for the <%= file_name %> plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'NamedCell'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+def recursive_copy(from,to)
+  Dir.mkdir to unless File.directory? to
+  Dir.new("#{from}").each do |dir|
+    if File.directory? "#{from}/#{dir}"
+      next if dir == "." or dir == ".."
+      Dir.mkdir "#{to}/#{dir}"
+      recursive_copy("#{from}/#{dir}","#{to}/#{dir}")
+    else
+      docmd("cp -p #{from}/#{dir} #{to}")
+    end
+  end
+end
+      
+namespace :meteor do
+  desc "install assets for the <%= file_name %> meteor widget plugin"
+  task :install_assets do
+    %w{images stylesheets javascripts}.each do |assets_dir|
+      recursive_copy(File.expand_path("../<%= file_name %>/public/#{assets_dir}"),
+                     File.expand_path("../../../public/#{assets_dir}/<%= file_name %>"))
+    end
+  end
+end
+
