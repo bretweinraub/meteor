@@ -80,8 +80,10 @@ module Meteor
     #
     # 
 
-    def render(h={})
-      self.class.renderer_class.new(h.merge!(:spec => self)).render
+    def render(*args,&block)
+      h= args[0] || {}
+      h.merge!(:spec => self)
+      self.class.renderer_class.new(h).render(h,&block)
     end
 
     #

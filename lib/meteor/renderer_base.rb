@@ -204,12 +204,13 @@ EOF
       end
     end
 
-    def render(h={})
+    def render(*args,&block)
+      h = args[0] || {}
       h.merge!(:htmlprefix => htmlprefix,
                :name => name)
 
       begin
-        conditionally_render_partial(event, h)  # event is set when the Renderer is created.
+        conditionally_render_partial(event, h, &block)  # event is set when the Renderer is created.
       rescue Exception => e
         if debug_exceptions
           puts e
