@@ -50,6 +50,7 @@ module Meteor
     end
 
     # See the metor cookbook for discuss of the partial algorithm.
+    # <%= renderer.conditionally_render_partial(spec.has_children? ? :rows_with_children : :rows_without_children, args) %>
     def conditionally_render_partial(partial_spec, *args, &block)
       ret = nil
       partial_to_render = nil
