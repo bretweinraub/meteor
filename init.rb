@@ -3,9 +3,19 @@
 require 'rubygems'
 require 'ckuru-tools'
 
-Dir.glob(File.expand_path(File.join(File.dirname(__FILE__),'lib','**','*.rb'))).each {|rb|
-  require rb
-}
+rec=0
+while rec < 2 do
+  Dir.glob(File.expand_path(File.join(File.dirname(__FILE__),'lib','**','*.rb'))).each {|rb|
+    begin
+      require rb
+    rescue Exception => e
+      if rec > 0
+        raise e
+      end
+    end
+  }
+  rec += 1
+end
 
 require File.join(File.dirname(__FILE__),'lib','extensions.rb')
 
