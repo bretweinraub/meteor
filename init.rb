@@ -17,6 +17,6 @@ while rec < 2 do
   rec += 1
 end
 
-require File.join(File.dirname(__FILE__),'lib','extensions.rb')
+require File.join(File.dirname(__FILE__),'extensions.rb')
 
 ActionView::Base.send :include, MeteorHelper
