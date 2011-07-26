@@ -107,11 +107,11 @@ module Meteor
 
 <pre>
 
-Nothing was found to render for partial spec \"_#{partial_spec}\" of class 
-#{spec.class}.  
+Nothing was found to render for partial spec \"_#{partial_spec}\" of class
+#{spec.class}.
 The following output is intended to help you debug this issue.
 
-** First off, the following are the base view paths available in the 
+** First off, the following are the base view paths available in the
 ActionView template we are using:
 EOF
 
@@ -151,7 +151,7 @@ EOF
         super h
 
         raise ":spec and must be set in #{current_method}" unless
-          spec 
+          spec
         if controller
           raise ":controller is not of type ActionController::Base (#{controller.class} #{controller} instead)" unless
             controller.is_a? ::ActionController::Base
@@ -181,8 +181,8 @@ EOF
           view_paths.each do |view_path|
             args.each do |file_to_check|
               return file_to_check if (
-                                       File.exists?("#{view_path}/#{file_to_check}.erb") or
-                                       File.exists?("#{view_path}/#{file_to_check}.rhtml")
+                                       File.exists?("#{RAILS_ROOT}/#{view_path}/#{file_to_check}.erb") ||
+                                       File.exists?("#{RAILS_ROOT}/#{view_path}/#{file_to_check}.rhtml")
                                        )
             end
           end
