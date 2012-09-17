@@ -32,7 +32,7 @@ Blog posts and documentation describing the above is available (see Where below)
 
 *   [Github:](http://github.com/bretweinraub/meteor)
     http://github.com/bretweinraub/meteor
-*   [Blog/Docs:](http://www.aura-software.com/entries/4-about-the-meteor-plugin)
+*   [Blog/Docs:](http://admin.aura-software.com/tags/3-meteor)
     http://www.aura-software.com/entries/4-about-the-meteor-plugin
 *   [Widget catalog:](http://meteor-catalog.aura-software.com)
     http://meteor-catalog.aura-software.com
